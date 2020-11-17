@@ -1,0 +1,40 @@
+name: Unit Tests & Lint
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:12.3
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_PASSWORD: postgres
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Ruby 2.7
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 2.7
+      - name: Set up Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.13.0
+      - name: Install PostgreSQL client
+        run: |
+          sudo apt-get -yqq install libpq-dev
+      - name: Bundle install
+        run: |
+          gem install bundler
+          bundle install --jobs 4 --retry 3
+          yarn install
+      - name: Rubocop
+        run: bundle exec rubocop
+      - name: RSpec
+        run: |
+          cp config/database.ci.yml config/database.yml
+          bundle exec rails db:setup
+          bundle exec rspec
+
