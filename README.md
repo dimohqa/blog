@@ -6,7 +6,7 @@ Blog
 
 2.7.1
 
-## Run
+## Install
 
 yarn install
 
