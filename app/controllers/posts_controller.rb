@@ -1,6 +1,9 @@
 class PostsController < ApplicationController
   def index
     @posts = Post.all
+    @posts.each do |post|
+      post[:author] = User.find(post.author).email
+    end
   end
 
   def new
@@ -17,7 +20,7 @@ class PostsController < ApplicationController
     if @post.update(post_params)
       redirect_to @post
     else
-      render 'edit'
+      render "edit"
     end
   end
 
@@ -34,13 +37,12 @@ class PostsController < ApplicationController
   end
 
   def create
-    # render plain: params[:post].inspect
     @post = Post.new(post_params)
-
+    @post.author = current_user.id
     if @post.save
       redirect_to @post
     else
-      render 'new'
+      render "new"
     end
   end
 
