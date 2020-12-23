@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   get "hello/index"
-  get "posts" => "posts#index"
+  root "posts#index", as: "home"
 
   resources :posts
 end
