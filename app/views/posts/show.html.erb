@@ -1,2 +1,15 @@
 <h1><%= @post.title %></h1>
 <p><%= @post.body %></p>
+<hr>
+<%=
+  link_to "Редактировать",
+          edit_post_path(@post),
+          :class => "btn btn-outline-secondary"
+%>
+<%=
+  link_to "Удалить пост",
+          post_path(@post),
+          method: :delete,
+          data: { confirm: "Вы действительно хотите удалить статью?" },
+          :class => "btn btn-danger"
+%>

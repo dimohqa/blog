@@ -1,5 +1,5 @@
-<h2>Добавление нового поста</h2>
-<%= form_for :post, url: posts_path do |f| %>
+<h2>Редактирование поста</h2>
+<%= form_for :post, url: post_path(@post), method: :patch do |f| %>
   <% if @post.errors.any?  %>
     <% @post.errors.full_messages.each do |msg|  %>
       <div class="alert alert-danger">
