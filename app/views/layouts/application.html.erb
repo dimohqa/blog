@@ -27,6 +27,7 @@
         <span class="navbar-brand"><%= link_to "Блог", home_path, :class => "nav-link" %></span>
         <ul class="navbar-nav flex-row">
           <% if user_signed_in? %>
+            <li class="nav-item nav-item-margin"><%= link_to "Мои посты", myposts_path, :class => "nav-link" %></li>
             <li class="nav-item nav-item-margin"><%= link_to "Добавление статьи", new_post_path, :class => "nav-link" %></li>
             <li class="nav-item nav-item-margin"><%= link_to "Выход", destroy_user_session_path, :class => "nav-link" %></li>
           <% else %>
