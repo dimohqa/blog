@@ -1,16 +1,31 @@
-<h1><%= @post.title %></h1>
-<p><%= @post.body %></p>
-<hr>
-<% if current_user.id.to_s == @post.author %>
-  <%=
-    link_to "Редактировать",
-            edit_post_path(@post),
-            :class => "btn btn-outline-secondary"
-  %>
-  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeModal">
-    Удалить
-  </button>
-<% end %>
+<div class="card-header">
+  <h1><%= @post.title %></h1>
+  <div class="buttons">
+    <% if current_user && current_user.id.to_s == @post.author %>
+      <%=
+        link_to "Редактировать",
+                edit_post_path(@post),
+                :class => "btn btn-outline-secondary"
+      %>
+      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeModal">
+        Удалить
+      </button>
+    <% end %>
+  </div>
+</div>
+<p class="card-body"><%= @post.body %></p>
+<div class="card-footer">
+  <div class="rate">
+    <%= button_to "Нравится", up_rate_post_path(@post.id), :class => "btn btn-outline-success rateButton", :disabled => !current_user %>
+    <%= button_to "Не нравится", down_rate_post_path(@post.id), :class => "btn btn-outline-danger rateButton", :disabled => !current_user %>
+  </div>
+  <div>
+    <% unless current_user %>
+    Авторизуйтесь, чтобы оценивать посты.
+    <%  end %>
+  </div>
+</div>
+
 <!-- Modal -->
 <div class="modal" id="removeModal">
   <div class="modal-dialog">
@@ -29,3 +44,33 @@
     </div>
   </div>
 </div>
+
+<style>
+  .rate {
+      display: flex;
+  }
+
+  .card-body {
+      white-space: pre-wrap;
+  }
+
+  .rateButton {
+      margin-right: 20px;
+  }
+
+  .card-footer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+  }
+
+  .buttons > *:not(:last-child) {
+      margin-right: 20px;
+  }
+</style>

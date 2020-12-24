@@ -4,27 +4,27 @@
     <div class="card-body">
       <h5 class="card-title"><%= post.title %></h5>
       <h6>Автор: <%= post.author %></h6>
-      <p><%= post.body %></p>
+      <p class="cardBodyText"><%= post.body %></p>
       <div class="footer">
         <%=
           link_to "Читать далее",
                   post_path(post),
                   :class => "btn btn-outline-primary"
         %>
-        <%= post.up_rate.length %>
-        <%= button_to "Like", up_rate_post_path(post.id) %>
-        <%= button_to "Unlike", down_rate_post_path(post.id) %>
-        <%= post.down_rate.length %>
+        <div>
+          <span class="upRate">+ <%= post.up_rate.length %></span> / <span class="downRate">- <%= post.down_rate.length %></span>
+        </div>
       </div>
     </div>
   </div>
 <% end %>
 
 <style>
-  .rateWrapper {
-      display: flex;
-      align-items: center;
-      width: 120px;
+  .cardBodyText {
+      max-height: 310px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: pre-wrap;
   }
 
   .footer {
@@ -34,10 +34,8 @@
 
   .upRate {
       color: #28a745;
-      margin-right: 10px;
   }
   .downRate {
       color: #dc3545;
-      margin-left: 10px;
   }
 </style>

@@ -17,13 +17,13 @@
       }
 
       .nav-item-margin:not(:last-child) {
-          margin-right: 10px;
+          margin-right: 20px;
       }
     </style>
   </head>
   <body>
     <nav class="navbar navbar-dark bg-dark">
-      <div class="container-fluid">
+      <div class="container">
         <span class="navbar-brand"><%= link_to "Блог", home_path, :class => "nav-link" %></span>
         <ul class="navbar-nav flex-row">
           <% if user_signed_in? %>

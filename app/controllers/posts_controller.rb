@@ -64,6 +64,7 @@ class PostsController < ApplicationController
     end
 
     post.save
+    redirect_to post, notice: "Действие успешно выполнено."
   end
 
   def down_rate_post
@@ -80,6 +81,7 @@ class PostsController < ApplicationController
     end
 
     post.save
+    redirect_to post, notice: "Действие успешно выполнено."
   end
 
   private def post_params
