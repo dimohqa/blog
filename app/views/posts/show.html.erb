@@ -1,15 +1,16 @@
 <h1><%= @post.title %></h1>
 <p><%= @post.body %></p>
 <hr>
-<%=
-  link_to "Редактировать",
-          edit_post_path(@post),
-          :class => "btn btn-outline-secondary"
-%>
-<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeModal">
-  Удалить
-</button>
-
+<% if current_user.id.to_s == @post.author %>
+  <%=
+    link_to "Редактировать",
+            edit_post_path(@post),
+            :class => "btn btn-outline-secondary"
+  %>
+  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeModal">
+    Удалить
+  </button>
+<% end %>
 <!-- Modal -->
 <div class="modal" id="removeModal">
   <div class="modal-dialog">
