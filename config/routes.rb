@@ -9,4 +9,7 @@ Rails.application.routes.draw do
   get "myposts" => "posts#myposts"
 
   resources :posts
+
+  post "/up_rate_post/:id" => "posts#up_rate_post", :as => "up_rate_post"
+  post "/down_rate_post/:id" => "posts#down_rate_post", :as => "down_rate_post"
 end

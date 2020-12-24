@@ -11,16 +11,10 @@
                   post_path(post),
                   :class => "btn btn-outline-primary"
         %>
-        <div class="btn-group btn-group-toggle rateWrapper" data-toggle="buttons">
-          <span class="upRate"><%= post.up_rate.length %></span>
-          <label class="btn btn-outline-success">
-            <input type="radio" name="options" id="option1" autocomplete="off">+
-          </label>
-          <label class="btn btn-outline-danger">
-            <input type="radio" name="options" id="option2" autocomplete="off" checked>-
-          </label>
-          <span class="downRate"><%= post.down_rate.length %></span>
-        </div>
+        <%= post.up_rate.length %>
+        <%= button_to "Like", up_rate_post_path(post.id) %>
+        <%= button_to "Unlike", down_rate_post_path(post.id) %>
+        <%= post.down_rate.length %>
       </div>
     </div>
   </div>

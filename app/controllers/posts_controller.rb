@@ -50,6 +50,38 @@ class PostsController < ApplicationController
     @posts = Post.where(author: current_user.id)
   end
 
+  def up_rate_post
+    post = Post.find(params[:id])
+    user_id = current_user.id.to_s
+
+    if post.up_rate.include?(user_id)
+      nil
+    else
+      if post.down_rate.include?(user_id)
+        post.down_rate.delete(user_id)
+      end
+      post.up_rate.push(user_id)
+    end
+
+    post.save
+  end
+
+  def down_rate_post
+    post = Post.find(params[:id])
+    user_id = current_user.id.to_s
+
+    if post.down_rate.include?(user_id)
+      nil
+    else
+      if post.up_rate.include?(user_id)
+        post.up_rate.delete(user_id)
+      end
+      post.down_rate.push(user_id)
+    end
+
+    post.save
+  end
+
   private def post_params
     params.require(:post).permit(:title, :body)
   end
