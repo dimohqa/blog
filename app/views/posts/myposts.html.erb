@@ -1,1 +1,15 @@
 <h3>Мои посты</h3>
+<% @posts.each do |post| %>
+  <div class="card border-primary mb-3">
+    <div class="card-body">
+      <h5 class="card-title"><%= post.title %></h5>
+      <h6>Автор: <%= post.author %></h6>
+      <p><%= post.body %></p>
+      <%=
+        link_to "Читать далее",
+                post_path(post),
+                :class => "btn btn-outline-primary"
+      %>
+    </div>
+  </div>
+<% end %>

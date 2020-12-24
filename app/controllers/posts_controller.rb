@@ -47,7 +47,7 @@ class PostsController < ApplicationController
   end
 
   def myposts
-
+    @posts = Post.where(author: current_user.id)
   end
 
   private def post_params
