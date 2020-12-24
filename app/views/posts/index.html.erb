@@ -5,11 +5,45 @@
       <h5 class="card-title"><%= post.title %></h5>
       <h6>Автор: <%= post.author %></h6>
       <p><%= post.body %></p>
-      <%=
-        link_to "Читать далее",
-                post_path(post),
-                :class => "btn btn-outline-primary"
-      %>
+      <div class="footer">
+        <%=
+          link_to "Читать далее",
+                  post_path(post),
+                  :class => "btn btn-outline-primary"
+        %>
+        <div class="btn-group btn-group-toggle rateWrapper" data-toggle="buttons">
+          <span class="upRate"><%= post.up_rate.length %></span>
+          <label class="btn btn-outline-success">
+            <input type="radio" name="options" id="option1" autocomplete="off">+
+          </label>
+          <label class="btn btn-outline-danger">
+            <input type="radio" name="options" id="option2" autocomplete="off" checked>-
+          </label>
+          <span class="downRate"><%= post.down_rate.length %></span>
+        </div>
+      </div>
     </div>
   </div>
 <% end %>
+
+<style>
+  .rateWrapper {
+      display: flex;
+      align-items: center;
+      width: 120px;
+  }
+
+  .footer {
+      display: flex;
+      justify-content: space-between;
+  }
+
+  .upRate {
+      color: #28a745;
+      margin-right: 10px;
+  }
+  .downRate {
+      color: #dc3545;
+      margin-left: 10px;
+  }
+</style>
