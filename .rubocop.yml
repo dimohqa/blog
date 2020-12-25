@@ -3,6 +3,10 @@ require:
   - rubocop-rails
 
 AllCops:
+  Exclude:
+    - 'db/**/*'
+    - '.git/**/*'
+    - 'node_modules/**/*'
   NewCops: enable
 
 Style/Documentation:
