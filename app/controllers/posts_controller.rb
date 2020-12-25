@@ -20,7 +20,7 @@ class PostsController < ApplicationController
     if @post.update(post_params)
       redirect_to @post
     else
-      render "edit"
+      render 'edit'
     end
   end
 
@@ -42,7 +42,7 @@ class PostsController < ApplicationController
     if @post.save
       redirect_to @post
     else
-      render "new"
+      render 'new'
     end
   end
 
@@ -60,14 +60,12 @@ class PostsController < ApplicationController
     if post.up_rate.include?(user_id)
       nil
     else
-      if post.down_rate.include?(user_id)
-        post.down_rate.delete(user_id)
-      end
+      post.down_rate.delete(user_id) if post.down_rate.include?(user_id)
       post.up_rate.push(user_id)
     end
 
     post.save
-    redirect_to post, notice: "Действие успешно выполнено."
+    redirect_to post, notice: 'Действие успешно выполнено.'
   end
 
   def down_rate_post
@@ -77,17 +75,17 @@ class PostsController < ApplicationController
     if post.down_rate.include?(user_id)
       nil
     else
-      if post.up_rate.include?(user_id)
-        post.up_rate.delete(user_id)
-      end
+      post.up_rate.delete(user_id) if post.up_rate.include?(user_id)
       post.down_rate.push(user_id)
     end
 
     post.save
-    redirect_to post, notice: "Действие успешно выполнено."
+    redirect_to post, notice: 'Действие успешно выполнено.'
   end
 
-  private def post_params
+  private
+
+  def post_params
     params.require(:post).permit(:title, :body)
   end
 end
