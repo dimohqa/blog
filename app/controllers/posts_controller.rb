@@ -48,6 +48,9 @@ class PostsController < ApplicationController
 
   def myposts
     @posts = Post.where(author: current_user.id)
+    @posts.each do |post|
+      post[:author] = User.find(post.author).email
+    end
   end
 
   def up_rate_post
