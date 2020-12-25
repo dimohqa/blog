@@ -21,10 +21,30 @@
   </div>
   <div>
     <% unless current_user %>
-    Авторизуйтесь, чтобы оценивать посты.
-    <%  end %>
+      Авторизуйтесь, чтобы оценивать посты и добавлять комментарии.
+    <% end %>
   </div>
 </div>
+<h3>Комментарии</h3>
+  <% @post.comments.each do |comment| %>
+      <div class="comment_block">
+        <p><strong><span><%= comment.username %></span></strong></p>
+        <p><%= comment.body %></p>
+      </div>
+  <% end %>
+<hr>
+<% if current_user %>
+  <h4>Добавить комментарий</h4>
+  <%= form_for ([@post, @post.comments.build]) do |f| %>
+    <p>
+      <%= f.label "Текст комментария" %>
+      <%= f.text_area(:body, { :class => "form-control", rows: "5" }) %>
+    </p>
+    <p>
+      <%= f.submit("Добавить комментарий", { :class => "btn btn-primary" }) %>
+    </p>
+  <% end %>
+<% end %>
 
 <!-- Modal -->
 <div class="modal" id="removeModal">
@@ -46,31 +66,43 @@
 </div>
 
 <style>
-  .rate {
-      display: flex;
-  }
+    .comment_block {
+        border: 1px solid #ccc;
+        background-color: #eee;
+        border-radius: 0px; /* скругление углов блока */
+        padding: 16px; /* внутренние поля */
+        margin: 16px auto; /* внешние отступы */
+    }
 
-  .card-body {
-      white-space: pre-wrap;
-  }
+    .bodyText {
+        height-min: 300px;
+    }
 
-  .rateButton {
-      margin-right: 20px;
-  }
+    .rate {
+        display: flex;
+    }
 
-  .card-footer {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-  }
+    .card-body {
+        white-space: pre-wrap;
+    }
 
-  .card-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-  }
+    .rateButton {
+        margin-right: 20px;
+    }
 
-  .buttons > *:not(:last-child) {
-      margin-right: 20px;
-  }
+    .card-footer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .buttons > *:not(:last-child) {
+        margin-right: 20px;
+    }
 </style>
