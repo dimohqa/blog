@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   def index
-    @posts = Post.all.sort_by { |post| puts Date.strptime(post.created_at.to_s, "%Y-%m-%d") }
+    @posts = Post.all.sort_by { |post| Date.strptime(post.created_at.to_s, "%Y-%m-%d") }
     @posts.each do |post|
       user = User.find(post.author)
       post[:author] = "#{user.firstName} #{user.lastName}"
