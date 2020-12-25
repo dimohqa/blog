@@ -19,13 +19,13 @@
     <%= button_to "Нравится", up_rate_post_path(@post.id), :class => "btn btn-outline-success rateButton", :disabled => !current_user %>
     <%= button_to "Не нравится", down_rate_post_path(@post.id), :class => "btn btn-outline-danger rateButton", :disabled => !current_user %>
   </div>
-  <div>
-    <% unless current_user %>
-      Авторизуйтесь, чтобы оценивать посты и добавлять комментарии.
-    <% end %>
-  </div>
+  <% unless current_user %>
+    <div class="rateAuthTip">
+        Авторизуйтесь, чтобы оценивать посты и добавлять комментарии.
+    </div>
+  <% end %>
 </div>
-<h3>Комментарии</h3>
+<h3 class="commentsTitle">Комментарии</h3>
   <% @post.comments.each do |comment| %>
       <div class="comment_block">
         <p><strong><span><%= comment.username %></span></strong></p>
@@ -104,5 +104,13 @@
 
     .buttons > *:not(:last-child) {
         margin-right: 20px;
+    }
+
+    .commentsTitle {
+        margin-top: 20px;
+    }
+
+    .rateAuthTip {
+        margin-top: 10px;
     }
 </style>
