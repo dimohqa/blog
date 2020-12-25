@@ -7,7 +7,7 @@ class CommentsController < ApplicationController
     if @comment.save
       redirect_to post_path(@post)
     else
-      render "new"  #исправить (если не получается сохранить, обновить страницу)
+      render "new" # исправить (если не получается сохранить, обновить страницу)
     end
   end
 
