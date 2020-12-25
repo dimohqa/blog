@@ -26,17 +26,26 @@
   </div>
 </div>
 <h3>Комментарии</h3>
-  <% @post.comments.each do |comment| %>
-      <div class="comment_block">
-        <p><strong><span><%= comment.username %></span></strong></p>
-        <p><%= comment.body %></p>
+<% @post.comments.each do |comment| %>
+  <div class="comment_block">
+    <div class = "comment_button">
+      <p><strong><span><%= comment.username %></span></strong></p>
+      <div class="buttons">
+        <% if current_user && User.find(current_user.id).email == comment.username %>
+          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeModal">
+            Удалить
+          </button>
+        <% end %>
       </div>
-  <% end %>
-  <% if @post.comments.length < 1 %>
-    <br>
-      <p><span>Будьте первыми, кто оставит комментарий под этим постом</span></p>
-    <br
-  <% end %>
+    </div>
+    <p><%= comment.body %></p>
+  </div>
+<% end %>
+<% if @post.comments.length < 1 %>
+  <br>
+  <p><span>Будьте первыми, кто оставит комментарий под этим постом</span></p>
+  <br
+<% end %>
 <hr>
 <% if current_user %>
   <h4>Добавить комментарий</h4>
@@ -77,6 +86,12 @@
         border-radius: 0px; /* скругление углов блока */
         padding: 16px; /* внутренние поля */
         margin: 16px auto; /* внешние отступы */
+    }
+
+    .comment_button {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
 
     .bodyText {
