@@ -1,8 +1,9 @@
 class PostsController < ApplicationController
   def index
-    @posts = Post.all
+    @posts = Post.all.sort_by { |post| !post.created_at }
     @posts.each do |post|
-      post[:author] = User.find(post.author).email
+      user = User.find(post.author)
+      post[:author] = "#{user.firstName} #{user.lastName}"
     end
   end
 
@@ -13,7 +14,8 @@ class PostsController < ApplicationController
   def show
     @post = Post.find(params[:id])
     @post.comments.each do |comment|
-      comment[:username] = User.find(comment.username).email
+      user = User.find(comment.username)
+      comment[:username] = "#{user.firstName} #{user.lastName}"
     end
   end
 
@@ -52,7 +54,8 @@ class PostsController < ApplicationController
   def myposts
     @posts = Post.where(author: current_user.id)
     @posts.each do |post|
-      post[:author] = User.find(post.author).email
+      user = User.find(post.author)
+      post[:author] = "#{user.firstName} #{user.lastName}"
     end
   end
 
