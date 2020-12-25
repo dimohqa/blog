@@ -12,6 +12,9 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
+    @post.comments.each do |comment|
+      comment[:username] = User.find(comment.username).email
+    end
   end
 
   def update
