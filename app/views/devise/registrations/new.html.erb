@@ -4,20 +4,30 @@
   <%= render "devise/shared/error_messages", resource: resource %>
 
   <div class="field">
-    <%= f.label :email %><br />
+    <%= f.label "Имя" %><br />
+    <%= f.text_field :firstName, autofocus: true, :class => "form-control" %>
+  </div>
+
+  <div class="field">
+    <%= f.label "Фамилия" %><br />
+    <%= f.text_field :lastName, :class => "form-control" %>
+  </div>
+
+  <div class="field">
+    <%= f.label "Почта" %><br />
     <%= f.email_field :email, autofocus: true, autocomplete: "email", :class => "form-control" %>
   </div>
 
   <div class="field">
-    <%= f.label :password %>
+    <%= f.label "Пароль" %>
     <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <em>(<%= @minimum_password_length %> символов минимум)</em>
     <% end %><br />
     <%= f.password_field :password, autocomplete: "new-password", :class => "form-control" %>
   </div>
 
   <div class="field">
-    <%= f.label :password_confirmation %><br />
+    <%= f.label "Повторите пароль" %><br />
     <%= f.password_field :password_confirmation, autocomplete: "new-password", :class => "form-control" %>
   </div>
 
