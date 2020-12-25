@@ -32,6 +32,11 @@
         <p><%= comment.body %></p>
       </div>
   <% end %>
+  <% if @post.comments.length < 1 %>
+    <br>
+      <p><span>Будьте первыми, кто оставит комментарий под этим постом</span></p>
+    <br
+  <% end %>
 <hr>
 <% if current_user %>
   <h4>Добавить комментарий</h4>
