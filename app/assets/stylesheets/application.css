@@ -13,3 +13,10 @@
  *= require_tree .
  *= require_self
  */
+
+.upRate {
+    color: #28a745;
+}
+.downRate {
+    color: #dc3545;
+}

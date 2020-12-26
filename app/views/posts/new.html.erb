@@ -1,27 +1,20 @@
-<h2>Добавление нового поста</h2>
-<%= form_for :post, url: posts_path do |f| %>
-  <% if @post.errors.any?  %>
-    <% @post.errors.full_messages.each do |msg|  %>
-      <div class="alert alert-danger">
-        <%= msg %>
-      </div>
-    <% end %>
+<div class="new-post-page">
+  <h2>Добавление нового поста</h2>
+  <%= form_for :post, url: posts_path do |f| %>
+    <p>
+      <%= f.label "Название" %>
+      <%= f.text_field(:title, {:class => "form-control"}) %>
+    </p>
+    <p>
+      <%= f.label "Текст статьи" %>
+      <%= f.text_area(:body, {:class => "form-control", rows: "20" }) %>
+    </p>
+    <p>
+      <%= f.submit({:class => "btn btn-primary", :name => "new_post"}) %>
+      <%= f.submit "Добавить в черновики",
+                   :class => "btn btn-secondary",
+                   :name => "new_draft"
+      %>
+    </p>
   <% end %>
-  <p>
-    <%= f.label "Название" %>
-    <%= f.text_field(:title, {:class => "form-control"}) %>
-  </p>
-  <p>
-    <%= f.label "Текст статьи" %>
-    <%= f.text_area(:body, {:class => "form-control", rows: "20" }) %>
-  </p>
-  <p>
-    <%= f.submit({:class => "btn btn-primary"}) %>
-  </p>
-<% end %>
-
-<style>
-  .bodyText {
-      height-min: 300px;
-  }
-</style>
+</div>

@@ -1,0 +1,56 @@
+.show-page {
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .card-body {
+    white-space: pre-wrap;
+
+    .bodyText {
+      height-min: 300px;
+    }
+  }
+
+  .card-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .comments {
+    margin-top: 20px;
+
+    .comment_button {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .comment_block {
+      border: 1px solid #ccc;
+      background-color: #eee;
+      border-radius: 0px; /* скругление углов блока */
+      padding: 16px; /* внутренние поля */
+      margin: 16px auto; /* внешние отступы */
+    }
+
+  }
+
+  .rate {
+    display: flex;
+  }
+
+  .rateButton {
+    margin-right: 20px;
+  }
+
+  .buttons > *:not(:last-child) {
+    margin-right: 20px;
+  }
+
+  .rateAuthTip {
+    margin-top: 10px;
+  }
+}

@@ -1,136 +1,85 @@
-<div class="card-header">
-  <h1><%= @post.title %></h1>
-  <div class="buttons">
-    <% if current_user && current_user.id.to_s == @post.author %>
-      <%=
-        link_to "Редактировать",
-                edit_post_path(@post),
-                :class => "btn btn-outline-secondary"
-      %>
-      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeModal">
-        Удалить
-      </button>
-    <% end %>
-  </div>
-</div>
-<p class="card-body"><%= @post.body %></p>
-<div class="card-footer">
-  <div class="rate">
-    <%= button_to "Нравится", up_rate_post_path(@post.id), :class => "btn btn-outline-success rateButton", :disabled => !current_user %>
-    <%= button_to "Не нравится", down_rate_post_path(@post.id), :class => "btn btn-outline-danger rateButton", :disabled => !current_user %>
-  </div>
-  <% unless current_user %>
-    <div class="rateAuthTip">
-        Авторизуйтесь, чтобы оценивать посты и добавлять комментарии.
-    </div>
-  <% end %>
-</div>
-<h3>Комментарии</h3>
-<% @post.comments.each do |comment| %>
-  <div class="comment_block">
-    <div class = "comment_button">
-      <p><strong><span><%= comment.username %></span></strong></p>
+<div class="show-page">
+  <div class="card show-page__card">
+    <div class="card-header ">
+      <h1><%= @post.title %></h1>
       <div class="buttons">
-        <% if current_user && User.find(current_user.id).email == comment.username %>
+        <% if current_user && current_user.id.to_s == @post.author %>
+          <%=
+            link_to "Редактировать",
+                    edit_post_path(@post),
+                    :class => "btn btn-outline-secondary"
+          %>
           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeModal">
             Удалить
           </button>
         <% end %>
       </div>
     </div>
-    <p><%= comment.body %></p>
+    <p class="card-body"><%= @post.body %></p>
+    <div class="card-footer">
+      <div class="rate">
+        <%= button_to "Нравится", up_rate_post_path(@post.id), :class => "btn btn-outline-success rateButton", :disabled => !current_user %>
+        <%= button_to "Не нравится", down_rate_post_path(@post.id), :class => "btn btn-outline-danger rateButton", :disabled => !current_user %>
+      </div>
+      <% unless current_user %>
+        <div class="rateAuthTip">
+          Авторизуйтесь, чтобы оценивать посты и добавлять комментарии.
+        </div>
+      <% end %>
+    </div>
   </div>
-<% end %>
-<% if @post.comments.length < 1 %>
-  <br>
-  <p><span>Будьте первыми, кто оставит комментарий под этим постом</span></p>
-  <br />
-<% end %>
-<hr>
-<% if current_user %>
-  <h4>Добавить комментарий</h4>
-  <%= form_for ([@post, @post.comments.build]) do |f| %>
-    <p>
-      <%= f.label "Текст комментария" %>
-      <%= f.text_area(:body, { :class => "form-control", rows: "5" }) %>
-    </p>
-    <p>
-      <%= f.submit("Добавить комментарий", { :class => "btn btn-primary" }) %>
-    </p>
-  <% end %>
-<% end %>
+  <div class="comments">
+    <h3>Комментарии</h3>
+    <% @post.comments.each do |comment| %>
+      <div class="comment_block">
+        <div class="comment_button">
+          <p><strong><span><%= comment.username %></span></strong></p>
+          <div class="buttons">
+            <% if current_user && User.find(current_user.id).email == comment.username %>
+              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeModal">
+                Удалить
+              </button>
+            <% end %>
+          </div>
+        </div>
+        <p><%= comment.body %></p>
+      </div>
+    <% end %>
+    <% if @post.comments.length < 1 %>
+      <br>
+      <p><span>Будьте первыми, кто оставит комментарий под этим постом</span></p>
+      <br/>
+    <% end %>
+    <hr>
+    <% if current_user %>
+      <h4>Добавить комментарий</h4>
+      <%= form_for ([@post, @post.comments.build]) do |f| %>
+        <p>
+          <%= f.label "Текст комментария" %>
+          <%= f.text_area(:body, {:class => "form-control", rows: "5"}) %>
+        </p>
+        <p>
+          <%= f.submit("Добавить комментарий", {:class => "btn btn-primary"}) %>
+        </p>
+      <% end %>
+    <% end %>
+  </div>
 
-<!-- Modal -->
-<div class="modal" id="removeModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Подтвердите действие</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <div class="modal-body">
-        Вы действительно хотите удалить статью?
-      </div>
-      <div class="modal-footer">
-        <%= link_to "Удалить", post_path(@post), method: :delete, :class => "btn btn-danger" %>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+  <div class="modal" id="removeModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Подтвердите действие</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          Вы действительно хотите удалить статью?
+        </div>
+        <div class="modal-footer">
+          <%= link_to "Удалить", post_path(@post), method: :delete, :class => "btn btn-danger" %>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style>
-    .comment_block {
-        border: 1px solid #ccc;
-        background-color: #eee;
-        border-radius: 0px; /* скругление углов блока */
-        padding: 16px; /* внутренние поля */
-        margin: 16px auto; /* внешние отступы */
-    }
-
-    .comment_button {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    .bodyText {
-        height-min: 300px;
-    }
-
-    .rate {
-        display: flex;
-    }
-
-    .card-body {
-        white-space: pre-wrap;
-    }
-
-    .rateButton {
-        margin-right: 20px;
-    }
-
-    .card-footer {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .card-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    .buttons > *:not(:last-child) {
-        margin-right: 20px;
-    }
-
-    .commentsTitle {
-        margin-top: 20px;
-    }
-
-    .rateAuthTip {
-        margin-top: 10px;
-    }
-</style>
