@@ -1,16 +1,9 @@
 class CommentsController < ApplicationController
   def create
     @post = Post.find(params[:post_id])
-    @comment = @post.comments.new(comment_params)
-    @comment.author_id = current_user.id
-    user = User.find(current_user.id)
-    @comment.username = "#{user.firstName} #{user.lastName}"
+    fill_comment_fields(@post).save
 
-    if @comment.save
-      redirect_to post_path(@post)
-    else
-      render 'new'
-    end
+    redirect_to post_path(@post)
   end
 
   def destroy
@@ -19,6 +12,14 @@ class CommentsController < ApplicationController
     @comment.destroy
 
     redirect_to :controller => 'posts', :action => 'show', id: @post.id
+  end
+
+  private def fill_comment_fields(post)
+    @comment = post.comments.new(comment_params)
+    @comment.author_id = current_user.id
+    user = User.find(current_user.id)
+    @comment.username = "#{user.firstName} #{user.lastName}"
+    @comment
   end
 
   private def comment_params
