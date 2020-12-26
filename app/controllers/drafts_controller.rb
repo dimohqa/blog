@@ -10,6 +10,7 @@ class DraftsController < ApplicationController
   # GET /drafts/1
   # GET /drafts/1.json
   def show
+    @draft = Draft.find(params[:id])
   end
 
   # GET /drafts/new

@@ -1,4 +1,20 @@
-<p id="notice"><%= notice %></p>
-
-<%= link_to 'Edit', edit_draft_path(@draft) %> |
-<%= link_to 'Back', drafts_path %>
+<div class="draft-show-page">
+  <div class="show-page">
+    <div class="card show-page__card">
+      <div class="card-header ">
+        <h1><%= @draft.title %></h1>
+        <div class="buttons">
+          <%=
+            link_to "Редактировать",
+                    edit_draft_path(@draft),
+                    :class => "btn btn-outline-secondary"
+          %>
+          <%= button_to "Удалить", draft_path(@draft), :method => :delete, :class => "btn btn-danger" %>
+        </div>
+      </div>
+      <div class="card-body">
+        <%= @draft.body %>
+      </div>
+    </div>
+  </div>
+</div>
