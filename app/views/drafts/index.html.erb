@@ -1,0 +1,18 @@
+<div class="drafts-page">
+  <h1>Черновики</h1>
+  <% @drafts.each do |draft| %>
+    <div class="card border-primary mb-3">
+      <div class="card-body">
+        <h5 class="card-title"><%= draft.title %></h5>
+        <p class="cardBodyText"><%= draft.body %></p>
+        <div class="footer">
+          <%=
+            link_to "Читать далее",
+                    draft_path(draft),
+                    :class => "btn btn-outline-primary"
+          %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

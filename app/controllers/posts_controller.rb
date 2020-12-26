@@ -1,14 +1,10 @@
 class PostsController < ApplicationController
   def index
-    @posts = Post.all.sort_by { |post| Date.strptime(post.created_at.to_s, "%Y-%m-%d") }
+    @posts = Post.all.sort_by { |post| Date.strptime(post.created_at.to_s, '%Y-%m-%d') }
     @posts.each do |post|
       user = User.find(post.author)
       post[:author] = "#{user.firstName} #{user.lastName}"
     end
-  end
-
-  def new
-    @post = Post.new
   end
 
   def show
@@ -38,12 +34,12 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = Post.new(post_params)
-    @post.author = current_user.id
-    if @post.save
-      redirect_to @post
+    if params[:new_draft]
+      @draft = Draft.new(post_params)
+      save(@draft, drafts_path, 'new')
     else
-      render 'new'
+      @post = Post.new(post_params)
+      save(@post, @post, 'new')
     end
   end
 
@@ -88,6 +84,21 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title, :body)
+    req_body = params.require(:post).permit(:title, :body)
+    req_body[:author] = current_user.id
+
+    req_body
+  end
+
+  def new
+    @post = Post.new
+  end
+
+  def save(model, redirect_from, else_redirect_from)
+    if model.save
+      redirect_to redirect_from
+    else
+      render else_redirect_from
+    end
   end
 end

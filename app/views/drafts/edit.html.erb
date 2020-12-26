@@ -1,0 +1,16 @@
+<div class="edit-draft-page">
+  <h1>Редактирование черновика</h1>
+  <%= form_for :draft, url: draft_path(@draft), method: :patch do |f| %>
+    <p>
+      <%= f.label "Название" %>
+      <%= f.text_field(:title, {:class => "form-control"}) %>
+    </p>
+    <p>
+      <%= f.label "Текст статьи" %>
+      <%= f.text_area(:body, {:class => "form-control", rows: "20"}) %>
+    </p>
+    <p>
+      <%= f.submit("Сохранить", {:class => "btn btn-primary"}) %>
+    </p>
+  <% end %>
+</div>

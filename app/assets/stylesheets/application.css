@@ -13,3 +13,19 @@
  *= require_tree .
  *= require_self
  */
+
+.upRate {
+    color: #28a745;
+}
+
+.downRate {
+    color: #dc3545;
+}
+
+.buttons {
+    display: flex;
+}
+
+.buttons > *:not(:last-child) {
+    margin-right: 20px;
+}

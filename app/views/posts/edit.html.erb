@@ -1,4 +1,4 @@
-<h2>Редактирование поста</h2>
+<h1>Редактирование поста</h1>
 <%= form_for :post, url: post_path(@post), method: :patch do |f| %>
   <% if @post.errors.any?  %>
     <% @post.errors.full_messages.each do |msg|  %>
@@ -16,6 +16,6 @@
     <%= f.text_area(:body, {:class => "form-control", rows: "20"}) %>
   </p>
   <p>
-    <%= f.submit({:class => "btn btn-primary"}) %>
+    <%= f.submit("Сохранить", {:class => "btn btn-primary"}) %>
   </p>
 <% end %>

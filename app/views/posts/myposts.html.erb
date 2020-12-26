@@ -1,33 +1,22 @@
-<h3>Мои посты</h3>
-<% @posts.each do |post| %>
-  <div class="card border-primary mb-3">
-    <div class="card-body">
-      <h5 class="card-title"><%= post.title %></h5>
-      <h6>Автор: <%= post.author %></h6>
-      <p><%= post.body %></p>
-      <div class="footer">
-        <%=
-          link_to "Читать далее",
-                  post_path(post),
-                  :class => "btn btn-outline-primary"
-        %>
-        <div>
-          <span class="upRate">+ <%= post.up_rate.length %></span> / <span class="downRate">- <%= post.down_rate.length %></span>
+<div class="my-posts-page">
+  <h1>Мои посты</h1>
+  <% @posts.each do |post| %>
+    <div class="card border-primary mb-3">
+      <div class="card-body">
+        <h5 class="card-title"><%= post.title %></h5>
+        <h6>Автор: <%= post.author %></h6>
+        <p><%= post.body %></p>
+        <div class="footer">
+          <%=
+            link_to "Читать далее",
+                    post_path(post),
+                    :class => "btn btn-outline-primary"
+          %>
+          <div>
+            <span class="upRate">+ <%= post.up_rate.length %></span> / <span class="downRate">- <%= post.down_rate.length %></span>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-<% end %>
-
-<style>
-  .footer {
-      display: flex;
-      justify-content: space-between;
-  }
-  .upRate {
-      color: #28a745;
-  }
-  .downRate {
-      color: #dc3545;
-  }
-</style>
+  <% end %>
+</div>
