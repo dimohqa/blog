@@ -11,7 +11,7 @@ class CommentsController < ApplicationController
     @comment = @post.comments.find(params[:id])
     @comment.destroy
 
-    redirect_to :controller => 'posts', :action => 'show', id: @post.id
+    redirect_to controller: 'posts', action: 'show', id: @post.id
   end
 
   private def fill_comment_fields(post)

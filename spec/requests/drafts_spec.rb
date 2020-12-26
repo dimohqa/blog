@@ -39,21 +39,6 @@ RSpec.describe '/drafts', type: :request do
     end
   end
 
-  describe 'GET /new' do
-    it 'renders a successful response' do
-      get new_draft_url
-      expect(response).to be_successful
-    end
-  end
-
-  describe 'GET /edit' do
-    it 'render a successful response' do
-      draft = Draft.create! valid_attributes
-      get edit_draft_url(draft)
-      expect(response).to be_successful
-    end
-  end
-
   describe 'POST /create' do
     context 'with valid parameters' do
       it 'creates a new Draft' do

@@ -1,29 +1,21 @@
 class DraftsController < ApplicationController
   before_action :set_draft, only: %i[show edit update destroy]
 
-  # GET /drafts
-  # GET /drafts.json
   def index
     @drafts = Draft.all
   end
 
-  # GET /drafts/1
-  # GET /drafts/1.json
   def show
     @draft = Draft.find(params[:id])
   end
 
-  # GET /drafts/new
   def new
     @draft = Draft.new
   end
 
-  # GET /drafts/1/edit
-  def edit; end
-
   def publish
     @draft = Draft.find(params[:id])
-    @post = Post.create(:title => @draft.title, :body => @draft.body, :author => current_user.id)
+    @post = Post.create(title: @draft.title, body: @draft.body, author: current_user.id)
 
     @draft.destroy
 
@@ -31,8 +23,6 @@ class DraftsController < ApplicationController
     redirect_to posts_path
   end
 
-  # POST /drafts
-  # POST /drafts.json
   def create
     @draft = Draft.new(draft_params)
 
@@ -47,8 +37,6 @@ class DraftsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /drafts/1
-  # PATCH/PUT /drafts/1.json
   def update
     @draft = set_draft
 
@@ -59,8 +47,6 @@ class DraftsController < ApplicationController
     end
   end
 
-  # DELETE /drafts/1
-  # DELETE /drafts/1.json
   def destroy
     @draft.destroy
     respond_to do |format|

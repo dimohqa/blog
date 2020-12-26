@@ -2,9 +2,18 @@ class PostsController < ApplicationController
   def index
     @posts = Post.all.sort_by { |post| Date.strptime(post.created_at.to_s, '%Y-%m-%d') }
     @posts.each do |post|
-      puts post.title
+      unless post[:author]
+        post[:author] = ''
+        next
+      end
+
+      unless User.exists?(post.author)
+        post[:author] = ''
+        next
+      end
+
       user = User.find(post.author)
-      post[:author] = "#{user.firstName} #{user.lastName}"
+      post[:author] = "#{user.firstName} #{user.lastName}" if User.find(post.author)
     end
   end
 
