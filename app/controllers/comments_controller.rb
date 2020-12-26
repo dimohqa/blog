@@ -14,7 +14,7 @@ class CommentsController < ApplicationController
     redirect_to controller: 'posts', action: 'show', id: @post.id
   end
 
-  private def fill_comment_fields(post)
+  def fill_comment_fields(post)
     @comment = post.comments.new(comment_params)
     @comment.author_id = current_user.id
     user = User.find(current_user.id)
@@ -22,7 +22,7 @@ class CommentsController < ApplicationController
     @comment
   end
 
-  private def comment_params
+  def comment_params
     params.require(:comment).permit(:body)
   end
 end

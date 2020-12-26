@@ -1,6 +1,4 @@
 class DraftsController < ApplicationController
-  before_action :set_draft, only: %i[show edit update destroy]
-
   def index
     @drafts = Draft.all
   end
@@ -54,8 +52,6 @@ class DraftsController < ApplicationController
       format.json { head :no_content }
     end
   end
-
-  private
 
   def set_draft
     @draft = Draft.find(params[:id])

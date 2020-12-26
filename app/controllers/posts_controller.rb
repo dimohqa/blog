@@ -1,20 +1,7 @@
 class PostsController < ApplicationController
   def index
     @posts = Post.all.sort_by { |post| Date.strptime(post.created_at.to_s, '%Y-%m-%d') }
-    @posts.each do |post|
-      unless post[:author]
-        post[:author] = ''
-        next
-      end
-
-      unless User.exists?(post.author)
-        post[:author] = ''
-        next
-      end
-
-      user = User.find(post.author)
-      post[:author] = "#{user.firstName} #{user.lastName}" if User.find(post.author)
-    end
+    where_author(@posts)
   end
 
   def show
@@ -22,13 +9,14 @@ class PostsController < ApplicationController
   end
 
   def update
+    unless Post.exists?(params[:id])
+      redirect_to posts_path
+      return
+    end
+
     @post = Post.find(params[:id])
 
-    if @post.update(post_params)
-      redirect_to @post
-    else
-      render 'edit'
-    end
+    redirect_to @post if @post.update(post_params)
   end
 
   def destroy
@@ -91,8 +79,6 @@ class PostsController < ApplicationController
     redirect_to post, notice: 'Действие успешно выполнено.'
   end
 
-  private
-
   def post_params
     req_body = params.require(:post).permit(:title, :body)
     req_body[:author] = current_user.id
@@ -109,6 +95,18 @@ class PostsController < ApplicationController
       redirect_to redirect_from
     else
       render else_redirect_from
+    end
+  end
+
+  def where_author(posts)
+    posts.each do |post|
+      unless User.exists?(post.author)
+        post[:author] = ''
+        next
+      end
+
+      user = User.find(post.author)
+      post[:author] = "#{user.firstName} #{user.lastName}" if User.find(post.author)
     end
   end
 end
