@@ -34,7 +34,7 @@ jobs:
         run: bundle exec rubocop
       - name: RSpec
         run: |
-          cp config/database.ci.yml config/database.yml
+          cp config/database.yml config/database.yml
           bundle exec rails db:setup
           bundle exec rspec
 
