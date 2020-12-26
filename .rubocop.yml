@@ -28,6 +28,9 @@ Metrics/CyclomaticComplexity:
 Metrics/PerceivedComplexity:
   Max: 9
 
+Metrics/AbcSize:
+  Max: 20
+
 Layout/LineLength:
   Max: 130
 
