@@ -32,9 +32,13 @@
       <p><strong><span><%= comment.username %></span></strong></p>
       <div class="buttons">
         <% if current_user && current_user.id.to_s == comment.author_id %>
-          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeModal">
-            Удалить
-          </button>
+          <%=
+            link_to "Удалить",
+                    [comment.post, comment],
+                    method: :delete,
+                    :class => "btn btn-outline-secondary",
+                    data: {confirm: "Хотите удалить комментарий?"}
+          %>
         <% end %>
       </div>
     </div>

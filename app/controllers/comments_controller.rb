@@ -13,6 +13,14 @@ class CommentsController < ApplicationController
     end
   end
 
+  def destroy
+    @post = Post.find(params[:post_id])
+    @comment = @post.comments.find(params[:id])
+    @comment.destroy
+
+    redirect_to :controller => 'posts', :action => 'show', id: @post.id
+  end
+
   private def comment_params
     params.require(:comment).permit(:body)
   end
