@@ -33,3 +33,6 @@ Metrics/AbcSize:
 
 Layout/LineLength:
   Max: 130
+
+RSpec/AnyInstance:
+  Enabled: false

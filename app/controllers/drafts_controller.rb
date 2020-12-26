@@ -55,8 +55,6 @@ class DraftsController < ApplicationController
     end
   end
 
-  private
-
   def set_draft
     @draft = Draft.find(params[:id])
   end
