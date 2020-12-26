@@ -1,5 +1,5 @@
 class DraftsController < ApplicationController
-  before_action :set_draft, only: [:show, :edit, :update, :destroy]
+  before_action :set_draft, only: %i[show edit update destroy]
 
   # GET /drafts
   # GET /drafts.json
@@ -19,16 +19,15 @@ class DraftsController < ApplicationController
   end
 
   # GET /drafts/1/edit
-  def edit
-  end
+  def edit; end
 
   def publish
-    #@draft = Draft.new(params[:draft_id])
-    #@post = Post.new(:title => @draft.title, :body => @draft.body)
+    # @draft = Draft.new(params[:draft_id])
+    # @post = Post.new(:title => @draft.title, :body => @draft.body)
 
-    #@draft.destroy
+    # @draft.destroy
 
-    #@post.save
+    # @post.save
     #
     puts params
   end
