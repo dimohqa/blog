@@ -3,15 +3,12 @@
     <div class="card-header ">
       <h1><%= @post.title %></h1>
       <div class="buttons">
-        <% if current_user && current_user.id.to_s == @post.author %>
+        <% if current_user && current_user.id.to_s %>
           <%=
             link_to "Редактировать",
                     edit_post_path(@post),
                     :class => "btn btn-outline-secondary"
           %>
-          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeModal">
-            Удалить
-          </button>
         <% end %>
       </div>
     </div>
@@ -28,6 +25,7 @@
       <% end %>
     </div>
   </div>
+
   <div class="comments">
     <h3>Комментарии</h3>
     <% @post.comments.each do |comment| %>
@@ -64,21 +62,21 @@
       <% end %>
     <% end %>
   </div>
+</div>
 
-  <div class="modal" id="removeModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Подтвердите действие</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        <div class="modal-body">
-          Вы действительно хотите удалить статью?
-        </div>
-        <div class="modal-footer">
-          <%= link_to "Удалить", post_path(@post), method: :delete, :class => "btn btn-danger" %>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
-        </div>
+<div class="modal" id="removeModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Подтвердите действие</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        Вы действительно хотите удалить статью?
+      </div>
+      <div class="modal-footer">
+        <%= link_to "Удалить", post_path(@post), method: :delete, :class => "btn btn-danger" %>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
       </div>
     </div>
   </div>

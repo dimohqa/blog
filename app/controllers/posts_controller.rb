@@ -9,10 +9,6 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
-    @post.comments.each do |comment|
-      user = User.find(comment.username)
-      comment[:username] = "#{user.firstName} #{user.lastName}"
-    end
   end
 
   def update
