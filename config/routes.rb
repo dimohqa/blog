@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  resources :drafts do
-    get 'publish' => 'drafts#publish'
-  end
+  resources :drafts
+
+  post 'drafts/:id/publish/' => 'drafts#publish', as: 'drafts_publish'
 
   devise_for :users
   devise_scope :user do

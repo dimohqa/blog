@@ -22,14 +22,13 @@ class DraftsController < ApplicationController
   def edit; end
 
   def publish
-    # @draft = Draft.new(params[:draft_id])
-    # @post = Post.new(:title => @draft.title, :body => @draft.body)
+    @draft = Draft.find(params[:id])
+    @post = Post.create(:title => @draft.title, :body => @draft.body, :author => current_user.id)
 
-    # @draft.destroy
+    @draft.destroy
 
-    # @post.save
-    #
-    puts params
+    @post.save
+    redirect_to posts_path
   end
 
   # POST /drafts

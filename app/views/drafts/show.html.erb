@@ -1,10 +1,10 @@
 <div class="draft-show-page">
   <div class="show-page">
     <div class="card show-page__card">
-      <div class="card-header ">
+      <div class="card-header">
         <h1><%= @draft.title %></h1>
         <div class="buttons">
-          <%= button_to "Опубликовать", draft_publish_path(@draft.id), :method => :get, :class => "btn btn-outline-success" %>
+          <%= button_to "Опубликовать", drafts_publish_path(@draft), :method => :post, :class => "btn btn-outline-success" %>
           <%=
             link_to "Редактировать",
                     edit_draft_path(@draft),
