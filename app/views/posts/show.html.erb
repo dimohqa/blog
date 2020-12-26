@@ -9,6 +9,9 @@
                     edit_post_path(@post),
                     :class => "btn btn-outline-secondary"
           %>
+          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeModal">
+            Удалить
+          </button>
         <% end %>
       </div>
     </div>
@@ -33,10 +36,14 @@
         <div class="comment_button">
           <p><strong><span><%= comment.username %></span></strong></p>
           <div class="buttons">
-            <% if current_user && User.find(current_user.id).email == comment.username %>
-              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeModal">
-                Удалить
-              </button>
+            <% if current_user && current_user.id.to_s == comment.author_id %>
+              <%=
+                link_to "Удалить",
+                        [comment.post, comment],
+                        method: :delete,
+                        :class => "btn btn-outline-secondary",
+                        data: {confirm: "Хотите удалить комментарий?"}
+                %>
             <% end %>
           </div>
         </div>
