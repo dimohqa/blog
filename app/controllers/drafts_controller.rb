@@ -22,6 +22,17 @@ class DraftsController < ApplicationController
   def edit
   end
 
+  def publish
+    #@draft = Draft.new(params[:draft_id])
+    #@post = Post.new(:title => @draft.title, :body => @draft.body)
+
+    #@draft.destroy
+
+    #@post.save
+    #
+    puts params
+  end
+
   # POST /drafts
   # POST /drafts.json
   def create
@@ -41,14 +52,12 @@ class DraftsController < ApplicationController
   # PATCH/PUT /drafts/1
   # PATCH/PUT /drafts/1.json
   def update
-    respond_to do |format|
-      if @draft.update(draft_params)
-        format.html { redirect_to @draft, notice: 'Draft was successfully updated.' }
-        format.json { render :show, status: :ok, location: @draft }
-      else
-        format.html { render :edit }
-        format.json { render json: @draft.errors, status: :unprocessable_entity }
-      end
+    @draft = set_draft
+
+    if @draft.update(draft_params)
+      redirect_to @draft
+    else
+      render 'drafts/edit'
     end
   end
 
@@ -63,13 +72,15 @@ class DraftsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_draft
-      @draft = Draft.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def draft_params
-      params.fetch(:draft, {})
-    end
+  def set_draft
+    @draft = Draft.find(params[:id])
+  end
+
+  def draft_params
+    req_body = params.require(:draft).permit(:title, :body)
+    req_body[:author] = current_user.id
+
+    req_body
+  end
 end
