@@ -13,9 +13,8 @@ Rails.application.routes.draw do
   get 'myposts' => 'posts#myposts'
 
   resources :posts do
+    get '/up_rate/' => 'posts#up_rate_post'
+    get '/down_rate/' => 'posts#down_rate_post'
     resources :comments
   end
-
-  post '/up_rate_post/:id' => 'posts#up_rate_post', :as => 'up_rate_post'
-  post '/down_rate_post/:id' => 'posts#down_rate_post', :as => 'down_rate_post'
 end

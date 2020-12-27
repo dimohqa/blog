@@ -66,4 +66,62 @@ RSpec.describe 'Posts', type: :request do
       expect { post.reload }.to raise_error ActiveRecord::RecordNotFound
     end
   end
+
+  describe 'GET /myposts' do
+    it 'renders a successful' do
+      Post.create!(title: 'test Title', body: 'test test test', author: 1)
+      get myposts_url
+      expect(response).to be_successful
+    end
+  end
+
+  describe 'GET /edit' do
+    it 'renders a successful' do
+      post = Post.create!(title: 'test Title', body: 'test test test', author: 0)
+      get edit_post_path(post.id)
+      expect(response).to be_successful
+    end
+  end
+
+  describe 'POST /up_rate_post' do
+    it 'successes up rate post' do
+      post = Post.create!(title: 'test Title', body: 'test test test', author: 0, up_rate: [0])
+      get post_up_rate_path(post.id)
+      expect(post.reload.up_rate).to eq %w[0 1]
+    end
+  end
+
+  describe 'POST /down_rate_post' do
+    it 'successes up rate post' do
+      post = Post.create!(title: 'test Title', body: 'test test test', author: 0, up_rate: [0])
+      get post_down_rate_path(post.id)
+      expect(post.reload.down_rate).to eq ['1']
+    end
+  end
+
+  describe 'GET /create' do
+    it 'success create post, check title' do
+      post posts_path, params: { post: { title: 'test Title', body: 'test test test' }, new_post: 'Save Post' }
+      post = Post.all[0]
+      expect(post.title).to eq 'test Title'
+    end
+
+    it 'success create post, check body' do
+      post posts_path, params: { post: { title: 'test Title', body: 'test test test' }, new_post: 'Save Post' }
+      post = Post.all[0]
+      expect(post.body).to eq 'test test test'
+    end
+
+    it 'success create draft for post, check title' do
+      post posts_path, params: { post: { title: 'test Title', body: 'test test test' }, new_draft: '' }
+      draft = Draft.all[0]
+      expect(draft.title).to eq 'test Title'
+    end
+
+    it 'success create draft for post, check body' do
+      post posts_path, params: { post: { title: 'test Title', body: 'test test test' }, new_draft: '' }
+      draft = Draft.all[0]
+      expect(draft.body).to eq 'test test test'
+    end
+  end
 end

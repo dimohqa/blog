@@ -18,8 +18,8 @@
     <p class="card-body"><%= @post.body %></p>
     <div class="card-footer">
       <div class="rate">
-        <%= button_to "Нравится", up_rate_post_path(@post.id), :class => "btn btn-outline-success rateButton", :disabled => !current_user %>
-        <%= button_to "Не нравится", down_rate_post_path(@post.id), :class => "btn btn-outline-danger rateButton", :disabled => !current_user %>
+        <%= button_to "Нравится", post_up_rate_path(@post.id), :method => :get, :class => "btn btn-outline-success rateButton", :disabled => !current_user %>
+        <%= button_to "Не нравится", post_down_rate_path(@post.id), :method => :get, :class => "btn btn-outline-danger rateButton", :disabled => !current_user %>
       </div>
       <% unless current_user %>
         <div class="rateAuthTip">

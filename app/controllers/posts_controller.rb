@@ -50,7 +50,7 @@ class PostsController < ApplicationController
   end
 
   def up_rate_post
-    post = Post.find(params[:id])
+    post = Post.find(params[:post_id])
     user_id = current_user.id.to_s
 
     if post.up_rate.include?(user_id)
@@ -65,7 +65,7 @@ class PostsController < ApplicationController
   end
 
   def down_rate_post
-    post = Post.find(params[:id])
+    post = Post.find(params[:post_id])
     user_id = current_user.id.to_s
 
     if post.down_rate.include?(user_id)
