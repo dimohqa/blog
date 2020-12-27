@@ -54,4 +54,20 @@ RSpec.describe '/drafts', type: :request do
       expect(response).to redirect_to(draft_url(draft[:id]))
     end
   end
+
+  describe 'Delete /destroy' do
+    it 'destroy draft a successful' do
+      draft = Draft.create!(test_draft)
+      delete draft_url(draft[:id])
+      expect { draft.reload }.to raise_error ActiveRecord::RecordNotFound
+    end
+  end
+
+  describe 'POST /publish' do
+    it 'renders a successful response' do
+      draft = Draft.create!(test_draft)
+      post drafts_publish_url(draft)
+      expect(response).to redirect_to(posts_path(1))
+    end
+  end
 end
