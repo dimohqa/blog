@@ -1,6 +1,4 @@
 class DraftsController < ApplicationController
-  before_action :set_draft, only: %i[show new create update destroy]
-
   def index
     @drafts = Draft.all
   end
@@ -14,13 +12,13 @@ class DraftsController < ApplicationController
   end
 
   def publish
-    #    @draft = Draft.find(params[:id])
-    # @post = Post.create(title: @draft.title, body: @draft.body, author: current_user.id)
+    @draft = Draft.find(params[:id])
+    @post = Post.create(title: @draft.title, body: @draft.body, author: current_user.id)
+    @draft.destroy
 
-    # @draft.destroy
+    @post.save
 
-    # @post.save
-    # redirect_to posts_path
+    redirect_to posts_path
   end
 
   def create
