@@ -64,7 +64,7 @@ RSpec.describe '/drafts', type: :request do
   end
 
   describe 'POST /publish' do
-    it 'renders a successful response' do
+    it 'redirect post if draft publish' do
       draft = Draft.create!(test_draft)
       post drafts_publish_url(draft)
       expect(response).to redirect_to(posts_path(1))
