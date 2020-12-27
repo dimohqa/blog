@@ -34,7 +34,7 @@ class DraftsController < ApplicationController
         format.html { redirect_to @draft, notice: 'Draft was successfully created.' }
         format.json { render :show, status: :created, location: @draft }
       else
-        format.html { redirect_to drafts_url, alert: 'Не удалось создать черновик.'}
+        format.html { redirect_to drafts_url, alert: 'Не удалось создать черновик.' }
       end
     end
   end
