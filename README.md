@@ -7,10 +7,10 @@ Blog
 2.7.1
 
 ## Install
-
+```
 yarn install
-
 bundle install
+```
 
 ## Other
 
@@ -18,14 +18,19 @@ bundle install
 
 * Configuration
 
-* Database creation
+## Database creation
 
-* Database initialization
+```
+rails db:create
+```
 
-* How to run the test suite
+## Database initialization
 
-* Services (job queues, cache servers, search engines, etc.)
+```
+rails db:migrate
+```
 
-* Deployment instructions
-
-* ...
+## Run test
+```
+rspec
+```
