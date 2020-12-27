@@ -4,6 +4,11 @@ class DraftsController < ApplicationController
   end
 
   def show
+    unless Draft.exists?(params[:id])
+      redirect_to drafts_path
+      return
+    end
+
     @draft = Draft.find(params[:id])
   end
 
@@ -41,7 +46,7 @@ class DraftsController < ApplicationController
     if @draft.update(draft_params)
       redirect_to @draft
     else
-      render 'drafts/edit'
+      render edit_draft_path
     end
   end
 
