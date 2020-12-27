@@ -12,12 +12,6 @@ yarn install
 bundle install
 ```
 
-## Other
-
-* System dependencies
-
-* Configuration
-
 ## Database creation
 
 ```
