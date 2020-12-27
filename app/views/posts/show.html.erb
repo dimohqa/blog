@@ -3,7 +3,7 @@
     <div class="card-header ">
       <h1><%= @post.title %></h1>
       <div class="buttons">
-        <% if current_user && current_user.id.to_s %>
+        <% if current_user && current_user.id.to_s == @post.author %>
           <%=
             link_to "Редактировать",
                     edit_post_path(@post),
@@ -43,7 +43,7 @@
                         method: :delete,
                         :class => "btn btn-outline-secondary",
                         data: {confirm: "Хотите удалить комментарий?"}
-                %>
+              %>
             <% end %>
           </div>
         </div>
