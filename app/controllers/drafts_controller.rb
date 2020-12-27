@@ -4,11 +4,12 @@ class DraftsController < ApplicationController
   end
 
   def show
-    @draft = Draft.find(params[:id])
-  end
+    unless Draft.exists?(params[:id])
+      redirect_to drafts_path
+      return
+    end
 
-  def new
-    @draft = Draft.new
+    @draft = Draft.find(params[:id])
   end
 
   def publish
@@ -16,9 +17,13 @@ class DraftsController < ApplicationController
     @post = Post.create(title: @draft.title, body: @draft.body, author: current_user.id)
     @draft.destroy
 
-    @post.save
-
-    redirect_to posts_path
+    respond_to do |format|
+      if @post.save
+        format.html { redirect_to posts_path(@post), notice: 'Пост успешно создан.' }
+      else
+        format.html { redirect_to drafts_url, alert: 'Не удалось создать пост из черновика' }
+      end
+    end
   end
 
   def create
@@ -29,8 +34,7 @@ class DraftsController < ApplicationController
         format.html { redirect_to @draft, notice: 'Draft was successfully created.' }
         format.json { render :show, status: :created, location: @draft }
       else
-        format.html { render :new }
-        format.json { render json: @draft.errors, status: :unprocessable_entity }
+        format.html { redirect_to drafts_url, alert: 'Не удалось создать черновик.' }
       end
     end
   end
@@ -41,11 +45,13 @@ class DraftsController < ApplicationController
     if @draft.update(draft_params)
       redirect_to @draft
     else
-      render 'drafts/edit'
+      render edit_draft_path
     end
   end
 
   def destroy
+    @draft = set_draft
+
     @draft.destroy
     respond_to do |format|
       format.html { redirect_to drafts_url, notice: 'Draft was successfully destroyed.' }
