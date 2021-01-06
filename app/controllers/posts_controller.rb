@@ -9,19 +9,18 @@ class PostsController < ApplicationController
   end
 
   def update
-    unless Post.exists?(params[:id])
-      redirect_to posts_path
-      return
-    end
-
     @post = Post.find(params[:id])
-
-    redirect_to @post if @post.update(post_params)
+    authorize @post
+    if @post.update(post_params)
+      redirect_to @post
+    else
+      render :edit
+    end
   end
 
   def destroy
     @post = Post.find(params[:id])
-
+    authorize @post
     @post.destroy
 
     redirect_to posts_path
@@ -29,6 +28,7 @@ class PostsController < ApplicationController
 
   def edit
     @post = Post.find(params[:id])
+    authorize @post
   end
 
   def create
