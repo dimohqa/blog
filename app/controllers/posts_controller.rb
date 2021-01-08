@@ -33,9 +33,11 @@ class PostsController < ApplicationController
 
   def create
     if params[:new_draft]
+      authorize Draft
       @draft = Draft.new(post_params)
       save(@draft, drafts_path, 'new')
     else
+      authorize Post
       @post = Post.new(post_params)
       save(@post, @post, 'new')
     end
@@ -43,6 +45,7 @@ class PostsController < ApplicationController
 
   def myposts
     @posts = Post.where(author: current_user.id)
+    authorize @post
     @posts.each do |post|
       user = User.find(post.author)
       post[:author] = "#{user.firstName} #{user.lastName}"

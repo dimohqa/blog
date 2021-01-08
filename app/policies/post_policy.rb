@@ -15,7 +15,7 @@ class PostPolicy
   end
 
   def destroy?
-    if user.present? || !post
+    if user.present?
       true
     else
       raise Pundit::NotAuthorizedError, "Вы не авторизованы, невозможно удалить #{@post.inspect}"
@@ -23,10 +23,26 @@ class PostPolicy
   end
 
   def edit?
-    if user.present? || !post
+    if user.present?
       true
     else
       raise Pundit::NotAuthorizedError, "Вы не авторизованы, невозможно изменить #{@post.inspect}"
+    end
+  end
+
+  def create?
+    if user.present?
+      true
+    else
+      raise Pundit::NotAuthorizedError, "Вы не авторизованы, невозможно опубликовать пост"
+    end
+  end
+
+  def myposts?
+    if user.present?
+      true
+    else
+      raise Pundit::NotAuthorizedError, "Вы не авторизованы, невозможно отобразить ваши посты"
     end
   end
 end
