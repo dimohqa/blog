@@ -45,7 +45,7 @@ class PostsController < ApplicationController
 
   def myposts
     @posts = Post.where(author: current_user.id)
-    authorize @post
+    authorize @posts
     @posts.each do |post|
       user = User.find(post.author)
       post[:author] = "#{user.firstName} #{user.lastName}"
