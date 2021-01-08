@@ -7,42 +7,32 @@ class PostPolicy
   end
 
   def update?
-    if user.present? || !post
-      true
-    else
-      raise Pundit::NotAuthorizedError, "Вы не авторизованы, невозможно обновить #{@post.inspect}"
-    end
+    return if user.present?
+
+    raise Pundit::NotAuthorizedError, "You are not logged in, it is impossible to update #{@post.inspect}"
   end
 
   def destroy?
-    if user.present?
-      true
-    else
-      raise Pundit::NotAuthorizedError, "Вы не авторизованы, невозможно удалить #{@post.inspect}"
-    end
+    return if user.present?
+
+    raise Pundit::NotAuthorizedError, "You are not logged in, it is impossible to delete #{@post.inspect}"
   end
 
   def edit?
-    if user.present?
-      true
-    else
-      raise Pundit::NotAuthorizedError, "Вы не авторизованы, невозможно изменить #{@post.inspect}"
-    end
+    return if user.present?
+
+    raise Pundit::NotAuthorizedError, "You are not logged in, it is impossible to edit #{@post.inspect}"
   end
 
   def create?
-    if user.present?
-      true
-    else
-      raise Pundit::NotAuthorizedError, "Вы не авторизованы, невозможно опубликовать пост"
-    end
+    return if user.present?
+
+    raise Pundit::NotAuthorizedError, 'You are not logged in, it is impossible to create post'
   end
 
   def myposts?
-    if user.present?
-      true
-    else
-      raise Pundit::NotAuthorizedError, "Вы не авторизованы, невозможно отобразить ваши посты"
-    end
+    return if user.present?
+
+    raise Pundit::NotAuthorizedError, 'You are not logged in, your posts cannot be displayed'
   end
 end
