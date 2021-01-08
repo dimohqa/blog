@@ -35,4 +35,10 @@ class PostPolicy
 
     raise Pundit::NotAuthorizedError, 'You are not logged in, your posts cannot be displayed'
   end
+
+  def new?
+    return if user.present?
+
+    raise Pundit::NotAuthorizedError, 'You are not logged in, your posts cannot be create'
+  end
 end
