@@ -1,7 +1,6 @@
 class PostsController < ApplicationController
   def index
     @posts = Post.all.sort_by { |post| Date.strptime(post.created_at.to_s, '%Y-%m-%d') }
-    where_author(@posts)
   end
 
   def show
@@ -32,29 +31,24 @@ class PostsController < ApplicationController
   end
 
   def create
+    authorize Post
     if params[:new_draft]
-      authorize Draft
       @draft = Draft.new(post_params)
       save(@draft, drafts_path, 'new')
     else
-      authorize Post
       @post = Post.new(post_params)
       save(@post, @post, 'new')
     end
   end
 
   def myposts
-    @posts = Post.where(author: current_user.id)
+    @posts = Post.where(user_id: current_user.id)
     authorize @posts
-    @posts.each do |post|
-      user = User.find(post.author)
-      post[:author] = "#{user.firstName} #{user.lastName}"
-    end
   end
 
   def up_rate_post
     post = Post.find(params[:post_id])
-    user_id = current_user.id.to_s
+    user_id = current_user.id
 
     if post.up_rate.include?(user_id)
       nil
@@ -69,7 +63,7 @@ class PostsController < ApplicationController
 
   def down_rate_post
     post = Post.find(params[:post_id])
-    user_id = current_user.id.to_s
+    user_id = current_user.id
 
     if post.down_rate.include?(user_id)
       nil
@@ -84,7 +78,7 @@ class PostsController < ApplicationController
 
   def post_params
     req_body = params.require(:post).permit(:title, :body)
-    req_body[:author] = current_user.id
+    req_body[:user_id] = current_user.id
 
     req_body
   end
@@ -99,18 +93,6 @@ class PostsController < ApplicationController
       redirect_to redirect_from
     else
       render else_redirect_from
-    end
-  end
-
-  def where_author(posts)
-    posts.each do |post|
-      unless User.exists?(post.author)
-        post[:author] = ''
-        next
-      end
-
-      user = User.find(post.author)
-      post[:author] = "#{user.firstName} #{user.lastName}" if User.find(post.author)
     end
   end
 end

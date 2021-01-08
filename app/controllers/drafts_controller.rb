@@ -14,7 +14,7 @@ class DraftsController < ApplicationController
 
   def publish
     @draft = Draft.find(params[:id])
-    @post = Post.create(title: @draft.title, body: @draft.body, author: current_user.id)
+    @post = Post.create(title: @draft.title, body: @draft.body, user_id: current_user.id)
     @draft.destroy
 
     respond_to do |format|
@@ -65,7 +65,7 @@ class DraftsController < ApplicationController
 
   def draft_params
     req_body = params.require(:draft).permit(:title, :body)
-    req_body[:author] = current_user.id
+    req_body[:user_id] = current_user.id
 
     req_body
   end

@@ -3,7 +3,7 @@
     <div class="card-header ">
       <h1><%= @post.title %></h1>
       <div class="buttons">
-        <% if current_user && current_user.id.to_s == @post.author %>
+        <% if current_user && current_user.id == @post.user_id %>
           <%=
             link_to "Редактировать",
                     edit_post_path(@post),
@@ -36,7 +36,7 @@
         <div class="comment_button">
           <p><strong><span><%= comment.username %></span></strong></p>
           <div class="buttons">
-            <% if current_user && current_user.id.to_s == comment.author_id %>
+            <% if current_user && current_user.id == comment.author_id %>
               <%=
                 link_to "Удалить",
                         [comment.post, comment],
