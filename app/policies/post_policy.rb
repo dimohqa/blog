@@ -8,7 +8,6 @@ class PostPolicy
 
   def update?
     if user.present? || !post
-      # if user.id == поверить, обновляет автор поста, или нет
       true
     else
       raise Pundit::NotAuthorizedError, "Вы не авторизованы, невозможно обновить #{@post.inspect}"
@@ -17,7 +16,6 @@ class PostPolicy
 
   def destroy?
     if user.present? || !post
-      # if user.id == поверить, обновляет автор поста, или нет
       true
     else
       raise Pundit::NotAuthorizedError, "Вы не авторизованы, невозможно удалить #{@post.inspect}"
@@ -26,7 +24,6 @@ class PostPolicy
 
   def edit?
     if user.present? || !post
-      # if user.id == поверить, обновляет автор поста, или нет
       true
     else
       raise Pundit::NotAuthorizedError, "Вы не авторизованы, невозможно изменить #{@post.inspect}"
